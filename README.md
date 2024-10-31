@@ -17,7 +17,7 @@ Pong — это простой модуль на языке Elixir, реализ
 ```elixir
 defp deps do
   [
-    {:pong, git: "https://github.com/username/pong.git"}  # замените на фактический репозиторий
+    {:pong, git: "https://github.com/OkinawaNet/pong"}
   ]
 end
 ```
