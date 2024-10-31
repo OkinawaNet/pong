@@ -1,21 +1,65 @@
+Вот пример содержания файла `README.md` для модуля `Pong`:
+
+```markdown
 # Pong
 
-**TODO: Add description**
+Pong — это простой модуль на языке Elixir, реализующий поведение GenServer, который отвечает на запросы `:ping`. На каждый запрос сервер возвращает кортеж `{:pong, node()}`, где `node()` — это имя узла, на котором выполняется процесс.
 
-## Installation
+## Требования
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `pong` to your list of dependencies in `mix.exs`:
+- Erlang версии 25.3
+- Elixir версии 1.17.3
+
+## Установка
+
+Для использования модуля `Pong` в своем проекте на Elixir добавьте его в зависимости вашего проекта. В файле `mix.exs` добавьте:
 
 ```elixir
-def deps do
+defp deps do
   [
-    {:pong, "~> 0.1.0"}
+    {:pong, git: "https://github.com/username/pong.git"}  # замените на фактический репозиторий
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/pong>.
+Затем выполните команду:
 
+```bash
+mix deps.get
+```
+
+## Использование
+
+### Запуск сервера
+
+Чтобы запустить сервер, используйте функцию `start_link/1`:
+
+```elixir
+{:ok, pid} = Pong.start_link(:any_value)
+```
+
+В качестве параметра передается начальное состояние. В данном случае, состояние не используется, но необходимо для вызова GenServer.
+
+### Отправка запроса `:ping`
+
+Чтобы отправить запрос `:ping` и получить ответ, используйте функцию `ping/1`:
+
+```elixir
+{:pong, node} = Pong.ping(pid)
+```
+
+Здесь `pid` — это идентификатор процесса, полученный при запуске сервера. В ответ вы получите кортеж `{:pong, node}`, где `node` — это имя узла, на котором выполняется сервер.
+
+## Примеры
+
+Вот несколько примеров использования:
+
+```elixir
+# Запуск сервера
+{:ok, pid} = Pong.start_link(:any_value)
+
+# Отправка запроса и получение ответа
+{:pong, node} = Pong.ping(pid)
+
+IO.puts("Получен ответ: #{inspect({:pong, node})}")
+```
